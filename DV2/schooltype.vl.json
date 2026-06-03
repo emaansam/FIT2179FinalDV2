@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "School Types of the Top 25 Schools",
+    "fontSize": 16,
+    "anchor": "start",
+    "offset": 12
+  },
+  "width": 400,
+  "height": 400,
+  "data": {
+    "url": "rank.csv",
+  "format": {
+  "type": "csv"
+  }
+  },
+  "transform": [
+    {"aggregate": [{"op": "count", "as": "count"}], "groupby": ["Type"]}
+  ],
+  "mark": {"type": "arc", "innerRadius": 80, "outerRadius": 140},
+  "encoding": {
+    "theta": {"field": "count", "type": "quantitative"},
+    "color": {
+      "field": "Type",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Independent", "Government", "Catholic"],
+        "range": ["#3db4c4", "#edf035", "#201cdc"]
+      },
+      "legend": {
+        "title": null,
+        "orient": "bottom",
+        "labelFontSize": 12,
+        "symbolType": "circle",
+        "symbolSize": 120
+      }
+    },
+    "tooltip": [
+      {"field": "Type", "type": "nominal", "title": "Type"},
+      {"field": "count", "type": "quantitative", "title": "Number of Schools"}
+    ]
+  },
+  "config": {
+    "view": {"stroke": null},
+    "font": "Georgia, serif"
+  }
+}

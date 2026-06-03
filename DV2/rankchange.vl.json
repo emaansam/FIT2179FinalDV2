@@ -1,0 +1,95 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title":
+    {
+      "text": "School Rankings Change from 2024 to 2025",
+      "fontSize": 16,
+      "subtitle": "Note: Schools on the Y-Axis are listed in order of their ranking, as of 2025.",
+      "subtitleFontSize": 14,
+      "anchor": "start",
+      "offset": 12
+    },
+    "width": 450,
+    "height": 620,
+    "data": {
+      "values": [
+        {"school": "Ballarat Clarendon College", "r24": 1, "r25": 1},
+        {"school": "MacRobertson Girls High School", "r24": 3, "r25": 2},
+        {"school": "Bacchus Marsh Grammar", "r24": 66, "r25": 3},
+        {"school": "Nossal High School", "r24": 12, "r25": 4},
+        {"school": "Haileybury College (Girls)", "r24": 7, "r25": 5},
+        {"school": "Ruyton Girls' School", "r24": 6, "r25": 6},
+        {"school": "Melbourne Girls Grammar", "r24": 9, "r25": 7},
+        {"school": "Melbourne High School", "r24": 10, "r25": 8},
+        {"school": "Melbourne Grammar School", "r24": 11, "r25": 9},
+        {"school": "Huntingover School", "r24": 2, "r25": 10},
+        {"school": "Camberwell Girls Grammar School", "r24": 19, "r25": 11},
+        {"school": "Fintona Girls School", "r24": 13, "r25": 12},
+        {"school": "Haileybury College", "r24": 15, "r25": 13},
+        {"school": "Mount Scopus Memorial College", "r24": 4, "r25": 14},
+        {"school": "Suzanne Cory High School", "r24": 44, "r25": 15},
+        {"school": "Bialik College", "r24": 8, "r25": 16},
+        {"school": "Loreto Mandevile Hall", "r24": 14, "r25": 17},
+        {"school": "Korowa Anglican Girls' School", "r24": 33, "r25": 18},
+        {"school": "Leibler Yevneh College", "r24": 23, "r25": 19},
+        {"school": "Presbyterian Ladies' College", "r24": 17, "r25": 20},
+        {"school": "Yarra Valley Grammar School", "r24": 35, "r25": 21},
+        {"school": "St Kevin's College", "r24": 22, "r25": 22},
+        {"school": "Methodist Ladies College", "r24": 27, "r25": 23},
+        {"school": "Firbank Grammar School", "r24": 34, "r25": 24},
+        {"school": "Lauriston Girl's School", "r24": 38, "r25": 25}
+      ]
+    },
+    "transform": [
+      {"calculate": "datum.r24 - datum.r25", "as": "change"},
+      {"calculate": "datum.change > 0 ? 'Moved Up' : datum.change < 0 ? 'Dropped' : 'No Change'", "as": "direction"},
+      {"calculate": "datum.change > 0 ? 'Moved up ' + datum.change + ' places' : datum.change < 0 ? 'Dropped ' + abs(datum.change) + ' places' : 'No change'", "as": "changeLabel"}
+    ],
+    "layer": [
+      {
+        "mark": {"type": "bar"},
+        "encoding": {
+          "y": {
+            "field": "school",
+            "type": "nominal",
+            "sort": {"field": "r25", "op": "min", "order": "ascending"},
+            "axis": {"title": null, "labelFontSize": 11, "labelLimit": 260, "ticks": false, "domainColor": "#cccccc"}
+          },
+          "x": {
+            "field": "change",
+            "type": "quantitative",
+            "title": "Number of Rank Places",
+            "axis": {"gridColor": "#e8e8e8", "domainColor": "#cccccc", "tickCount": 8}
+          },
+          "color": {
+            "field": "direction",
+            "type": "nominal",
+            "scale": {"domain": ["Moved Up", "No Change", "Dropped"], "range": ["#2ab363", "#aaaaaa", "#5c6ed6"]},
+            "legend": {"title": null, "orient": "top", "symbolType": "square", "symbolSize": 120, "labelFontSize": 12}
+          },
+          "tooltip": [
+            {"field": "school", "type": "nominal", "title": "School"},
+            {"field": "r24", "type": "quantitative", "title": "2024 Rank"},
+            {"field": "r25", "type": "quantitative", "title": "2025 Rank"},
+            {"field": "changeLabel", "type": "nominal", "title": "Change"}
+          ]
+        }
+      },
+      {
+        "transform": [{"filter": "datum.change === 0"}],
+        "mark": {"type": "text", "align": "left", "dx": 5, "fontSize": 10, "fontStyle": "italic", "color": "#888888"},
+        "encoding": {
+          "y": {"field": "school", "type": "nominal", "sort": {"field": "r25", "op": "min", "order": "ascending"}},
+          "x": {"value": 0},
+          "text": {"value": "No Change"}
+        }
+      }
+    ],
+    "config": {
+      "view": {"stroke": null},
+      "bar": {"size": 16},
+      "font": "Georgia, serif",
+      "padding": {"left": 10, "right": 30, "top": 20, "bottom": 20}
+    }
+  }
+  

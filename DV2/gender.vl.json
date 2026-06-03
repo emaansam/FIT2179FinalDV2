@@ -1,0 +1,69 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 800,
+    "height": 50,
+  
+    "data": {
+      "url": "rank.csv"
+    },
+  
+    "transform": [
+      {
+        "calculate": "datum.gender === 'Mixed' ? 'Co-Ed' : datum.gender",
+        "as": "gender_clean"
+      },
+      {
+        "aggregate": [
+          {"op": "count", "as": "count"}
+        ],
+        "groupby": ["gender_clean"]
+      },
+      {
+        "joinaggregate": [
+          {"op": "sum", "field": "count", "as": "total_schools"}
+        ]
+      },
+      {
+        "calculate": "round((datum.count / datum.total_schools) * 100)",
+        "as": "percent"
+      }
+    ],
+  
+    "mark": {"type": "bar", "height": 60},
+  
+    "encoding": {
+      "y": {
+        "value": "",
+        "axis": null
+      },
+  
+      "x": {
+        "field": "count",
+        "type": "quantitative",
+        "stack": "normalize",
+        "title": "Proportion of School Gender Types"
+      },
+  
+      "color": {
+        "field": "gender_clean",
+        "type": "nominal",
+        "scale": {
+          "domain": ["Co-Ed", "Female", "Male"],
+          "range": ["#2ab36c", "#c45dd6", "#5c6ed6"]
+        },
+        "title": "Gender Type"
+      },
+  
+      "tooltip": [
+        {"field": "gender_clean", "title": "Gender Type"},
+        {"field": "count", "title": "Number of Schools"},
+        {"field": "percent", "title": "Percent (%)"}
+      ]
+    },
+  
+    "config": {
+      "view": {"stroke": null},
+      "font": "Georgia, serif"
+    }
+  }
+  
