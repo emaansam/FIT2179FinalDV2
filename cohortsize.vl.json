@@ -1,0 +1,100 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "title": {
+    "text": "Unit 3/4 Cohort Size by School",
+    "fontSize": 16,
+    "anchor": "middle",
+    "offset": 12
+  },
+
+  "width": 950,
+  "height": 500,
+
+  "data": {
+    "values": [
+      {"School": "Ballarat Clarendon College", "cohort": 296},
+      {"School": "MacRobertson Girls High School", "cohort": 571},
+      {"School": "Bacchus Marsh Grammar", "cohort": 55},
+      {"School": "Nossal High School", "cohort": 410},
+      {"School": "Haileybury Girl's College", "cohort": 420},
+      {"School": "Ruyton Girls' School", "cohort": 163},
+      {"School": "Melbourne Girls Grammar", "cohort": 236},
+      {"School": "Melbourne High School", "cohort": 722},
+      {"School": "Melbourne Grammar School", "cohort": 377},
+      {"School": "Huntingtower School", "cohort": 187},
+      {"School": "Camberwell Girls Grammar School", "cohort": 191},
+      {"School": "Fintona Girls School", "cohort": 109},
+      {"School": "Haileybury College", "cohort": 577},
+      {"School": "Mount Scopus Memorial College", "cohort": 237},
+      {"School": "Suzanne Cory High School", "cohort": 432},
+      {"School": "Bialik College", "cohort": 174},
+      {"School": "Loreto Mandevile Hall", "cohort": 264},
+      {"School": "Korowa Anglican Girls' School", "cohort": 183},
+      {"School": "Leibler Yevneh College", "cohort": 103},
+      {"School": "Presbyterian Ladies' College", "cohort": 297},
+      {"School": "Yarra Valley Grammar School", "cohort": 364},
+      {"School": "St Kevin's College", "cohort": 392},
+      {"School": "Methodist Ladies College", "cohort": 438},
+      {"School": "Firbank Grammar School", "cohort": 232},
+      {"School": "Lauriston Girl's School", "cohort": 150}
+    ]
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.8
+      },
+      "encoding": {
+        "x": {
+          "field": "cohort",
+          "type": "quantitative",
+          "axis": null
+        },
+        "y": {
+          "field": "School",
+          "type": "nominal",
+          "axis": null
+        },
+        "size": {
+          "field": "cohort",
+          "type": "quantitative",
+          "scale": {"range": [200, 8000]},
+          "title": "Cohort Size"
+        },
+        "color": {
+          "field": "cohort",
+          "type": "quantitative",
+          "scale": {"scheme": "blues"}
+        },
+        "tooltip": [
+          {"field": "School", "title": "School"},
+          {"field": "cohort", "title": "Cohort Size"}
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "align": "center",
+        "baseline": "middle",
+        "fill": "black"
+      },
+      "encoding": {
+        "x": {"field": "cohort", "type": "quantitative"},
+        "y": {"field": "School", "type": "nominal"},
+        "text": {"field": "cohort"}
+      }
+    }
+  ],
+
+  "config": {
+    "view": {"stroke": null},
+    "font": "Georgia, serif"
+  }
+}

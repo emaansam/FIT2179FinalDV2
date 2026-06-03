@@ -1,0 +1,58 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Highest 2025 ATAR Per School",
+        "fontSize": 16,
+        "anchor": "middle",
+        "offset": 12
+      },
+    
+    "height": 350,
+    "width":550,
+
+    "data": { "url": "rank.csv" },
+  
+    "transform": [
+      {
+        "calculate": "random() * 0.8",
+        "as": "jitter"
+      }
+    ],
+  
+    "mark": {
+      "type": "point",
+      "filled": true,
+      "size": 140,
+      "color": "#5c6ed6"
+    },
+  
+    "encoding": {
+      "x": {
+        "field": "HighestATAR",
+        "type": "quantitative",
+        "title": "Highest ATAR (Dux)",
+        "scale": { "domain": [97.5, 100] }
+      },
+  
+      "y": {
+        "field": "jitter",
+        "type": "quantitative",
+        "axis": null
+      },
+  
+      "tooltip": [
+        { "field": "School" },
+        { "field": "HighestATAR", "title": "Dux ATAR" }
+      ]
+    },
+  
+    "config": {
+        "font": "Georgia, serif",
+      "view": { "stroke": null },
+      "axis": {
+        "labelFont": "Georgia",
+        "titleFont": "Georgia"
+      }
+    }
+  }
+  

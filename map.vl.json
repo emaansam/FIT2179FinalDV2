@@ -1,0 +1,103 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    
+    "hconcat": [
+  
+      {
+        "width": 800,
+        "height": 500,
+  
+        "projection": {"type": "mercator"},
+  
+        "layer": [
+          {
+            "data": {
+              "url": "mymap.json",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_10m_admin_1_states_provinces"
+              }
+            },
+            "mark": {
+              "type": "geoshape",
+              "fill": "#e1ebe1",
+              "stroke": "#999",
+              "strokeWidth": 1
+            }
+          },
+  
+          {
+            "data": {"url": "locations.csv"},
+  
+            "params": [
+              {
+                "name": "regionHover",
+                "select": {
+                  "type": "point",
+                  "fields": ["Region"],
+                  "on": "mouseover"
+                }
+              }
+            ],
+  
+            "mark": {
+              "type": "circle",
+              "size": 70,
+              "opacity": 0.9
+            },
+  
+            "encoding": {
+              "longitude": {"field": "X"},
+              "latitude": {"field": "Y"},
+  
+              "color": {
+                "field": "Region",
+                "type": "nominal",
+                "legend": null
+              },
+  
+              "opacity": {
+                "condition": {"param": "regionHover", "value": 1},
+                "value": 0.2
+              },
+  
+              "tooltip": [
+                {"field": "School_Name", "title": "School"},
+                {"field": "Address_Town", "title": "Town"},
+                {"field": "Region", "title": "Region"}
+              ]
+            }
+          }
+        ]
+      },
+  
+      {
+        "title": "Schools in Region",
+        "width": 250,
+  
+        "data": {"url": "locations.csv"},
+  
+        "transform": [
+          {"filter": {"param": "regionHover"}}
+        ],
+  
+        "mark": "text",
+  
+        "encoding": {
+          "text": {"field": "School_Name"},
+          "y": {
+            "field": "School_Name",
+            "type": "nominal",
+            "sort": "ascending",
+            "axis": null
+          },
+          "color": {"value": "#333"}
+        }
+      }
+    ],
+  
+    "config": {
+      "view": {"stroke": null},
+      "font": "Georgia, serif"
+    }
+  }

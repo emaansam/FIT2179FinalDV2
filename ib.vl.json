@@ -1,0 +1,51 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
+    "data": {
+      "url": "ibdata.csv"
+    },
+  
+    "facet": {
+      "field": "Year",
+      "type": "nominal",
+      "title": "IB and Non-IB Distribution in the Top 25 Schools"
+    },
+  
+    "spec": {
+      "mark": {"type": "arc", "innerRadius": 50},
+  
+      "encoding": {
+        "theta": {
+          "field": "Count",
+          "type": "quantitative"
+        },
+  
+        "color": {
+          "field": "Category",
+          "type": "nominal",
+          "scale": {
+            "domain": ["IB", "Non-IB"],
+            "range": ["#5c6ed6", "#d3d3d3"]
+          },
+          "title": "School Type"
+        },
+  
+        "tooltip": [
+          {"field": "Year"},
+          {"field": "Category"},
+          {"field": "Count"},
+          {
+            "calculate": "round(datum.Count / 25 * 100)",
+            "as": "Percent"
+          }
+        ]
+      }
+    },
+  
+    "columns": 2,
+    "config": {
+      "view": {"stroke": null},
+      "font": "Georgia, serif"
+    }
+  }
+  

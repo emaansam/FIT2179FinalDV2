@@ -1,0 +1,77 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+      "text": "Change in Percentage of 40+ Study Scores (2024-2025)",
+      "fontSize": 16,
+      "anchor": "middle",
+      "offset": 12
+    },
+
+    "width": 950,
+    "height": 450,
+  
+    "data": { 
+      "url": "rank.csv"
+    },
+  
+    "transform": [
+      {
+        "fold": ["Percent40Plus2024", "Percent40Plus2025"],
+        "as": ["Year", "Percent40Plus"]
+      },
+      {
+        "calculate": "datum.Year === 'Percent40Plus2024' ? '2024' : '2025'",
+        "as": "YearLabel"
+      }
+    ],
+  
+    "encoding": {
+      "y": {
+        "field": "School",
+        "type": "nominal",
+        "sort": {"field": "Percent40Plus2025", "order": "descending"},
+        "title": "School"
+      },
+      "x": {
+        "field": "Percent40Plus",
+        "type": "quantitative",
+        "title": "Percent of 40+ Study Scores"
+      }
+    },
+  
+    "layer": [
+      {
+        "mark": {"type": "rule", "strokeWidth": 2, "color": "#444"},
+        "encoding": {
+          "x": {"field": "Percent40Plus2024"},
+          "x2": {"field": "Percent40Plus2025"}
+        }
+      },
+      {
+        "mark": {"type": "point", "filled": true, "size": 80},
+        "encoding": {
+          "color": {
+            "field": "YearLabel",
+            "type": "nominal",
+            "scale": {
+              "domain": ["2024", "2025"],
+              "range": ["#2ab363", "#56B4E9"]
+            },
+            "title": "Year"
+          },
+          "tooltip": [
+            {"field": "School", "title": "School"},
+            {"field": "YearLabel", "title": "Year"},
+            {"field": "Percent40Plus", "title": "Percent", "format": ".1f"}
+          ]
+        }
+      }
+    ],
+    "config": {
+      "view": {"stroke": null},
+      "bar": {"size": 16},
+      "font": "Georgia, serif",
+      "padding": {"left": 10, "right": 30, "top": 20, "bottom": 20}
+    }
+}
+  
